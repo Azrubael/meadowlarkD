@@ -12,29 +12,33 @@ app.engine('handlebars', expressHandlebars({
 app.set('view engine', 'handlebars')
 app.use(express.static(__dirname + '/public'))
 
-// app.get('/', (req, res) => res.render('home'))
-app.get('/', handlers.render('home'))
+app.get('/', (req, res) => res.render('home'))
+// for testing
+// app.get('/', handlers.render('home'))
 
 
-/* app.get('/about', (req, res) => {
+app.get('/about', (req, res) => {
   res.render('about', { fortune: fortune.getFortune() })
-})*/
-app.get('/about', handlers.render('about'))
+})
+// for testing
+// app.get('/about', handlers.render('about'))
 
-/* custom 404 page
+// custom 404 page
 app.use((req, res) => {
   res.status(404)
   res.render('404')
-}) */
-app.use(handlers.notFound)
+}) 
+// for testing
+// app.use(handlers.notFound)
 
-/* custom 500 page
+// custom 500 page
 app.use((err, req, res, next) => {
   console.error(err.message)
   res.status(500)
   res.render('500')
-}) */
-app.use(handlers.serverError)
+})
+// for testing
+// app.use(handlers.serverError)
 
 app.listen(PORT, () => console.log(
     `Express running on http://localhost:${PORT}; ` +
