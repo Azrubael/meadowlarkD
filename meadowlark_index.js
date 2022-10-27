@@ -3,6 +3,7 @@ const expressHandlebars = require('express-handlebars')
 const fortune = require('./lib/fortune.js')
 const app = express()
 const PORT = 9001;
+const handlers = require('./lib/handlers.js')
 
 // Настройка механизма представлений Handlebars
 app.engine('handlebars', expressHandlebars({
@@ -11,35 +12,29 @@ app.engine('handlebars', expressHandlebars({
 app.set('view engine', 'handlebars')
 app.use(express.static(__dirname + '/public'))
 
-app.get('/', (req, res) => res.render('home'))
+// app.get('/', (req, res) => res.render('home'))
+app.get('/', handlers.render('home'))
 
-// moved in 'fortune.js'
-/* const fortunes = [
-  "Conquer your fears or they will conquer you.",
-  "Rivers need springs.",
-  "Do not fear what you don't know.",
-  "You will have a pleasant surprise.",
-  "Whenever possible, keep it simple.",
-] */
 
-app.get('/about', (req, res) => {
-  /* moved in 'fortune.js'
-  const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)] */
+/* app.get('/about', (req, res) => {
   res.render('about', { fortune: fortune.getFortune() })
-})
+})*/
+app.get('/about', handlers.render('about'))
 
-// custom 404 page
+/* custom 404 page
 app.use((req, res) => {
   res.status(404)
   res.render('404')
-})
+}) */
+app.use(handlers.notFound)
 
-// custom 500 page
+/* custom 500 page
 app.use((err, req, res, next) => {
   console.error(err.message)
   res.status(500)
   res.render('500')
-}) 
+}) */
+app.use(handlers.serverError)
 
 app.listen(PORT, () => console.log(
     `Express running on http://localhost:${PORT}; ` +
