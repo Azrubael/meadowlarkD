@@ -1,0 +1,9 @@
+# Игнорировать установленные npm пакеты и резервные копии
+node_modules/
+backups/
+
+# Поместить сюда любые другие файлы, которые не нужно
+# вносить на git (*.bak, *txt и т.п.)
+workflow.txt
+221023-express-meadowlark.code-workspace
+*~
