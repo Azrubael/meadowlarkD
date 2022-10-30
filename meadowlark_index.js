@@ -1,14 +1,14 @@
 const express = require('express')
-const expressHandlebars = require('express-handlebars')
+const ehbs = require('express-handlebars')
 const fortune = require('./lib/fortune.js')
 const app = express()
-const PORT = 9001;
-const handlers = require('./lib/handlers.js')
+const port = process.env.PORT || 9001
+// const handlers = require('./lib/handlers.js')
 
 // Настройка механизма представлений Handlebars
-app.engine('handlebars', expressHandlebars({
-    defaultLayout: 'main',
-}))
+
+const hbs = ehbs.create({defaultLayout: 'main'})
+app.engine('handlebars', hbs.engine) 
 app.set('view engine', 'handlebars')
 app.use(express.static(__dirname + '/public'))
 
@@ -40,6 +40,6 @@ app.use((err, req, res, next) => {
 // for testing
 // app.use(handlers.serverError)
 
-app.listen(PORT, () => console.log(
-    `Express running on http://localhost:${PORT}; ` +
+app.listen(port, () => console.log(
+    `Express running on http://localhost:${port}; ` +
     `press Ctrl+C to stop` ))
