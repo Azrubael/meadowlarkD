@@ -1,10 +1,10 @@
 const express = require('express')
 const ehbs = require('express-handlebars')
-const fortune = require('./lib/fortune.js')
+// const fortune = require('./lib/fortune.js')
 
 const app = express()
 
-// const handlers = require('./lib/handlers.js')
+const handlers = require('./lib/handlers.js')
 
 // Настройка механизма представлений Handlebars
 const hbs = ehbs.create({defaultLayout: 'main'})
@@ -15,33 +15,33 @@ const port = process.env.PORT || 9001
 
 app.use(express.static(__dirname + '/public'))
 
-app.get('/', (req, res) => res.render('home'))
+// app.get('/', (req, res) => res.render('home'))
 // for testing
-// app.get('/', handlers.render('home'))
+app.get('/', handlers('home'))
 
 
-app.get('/about', (req, res) => {
+/* app.get('/about', (req, res) => {
   res.render('about', { fortune: fortune.getFortune() })
-})
+}) */
 // for testing
-// app.get('/about', handlers.render('about'))
+app.get('/about', handlers('about'))
 
-// custom 404 page
+/* custom 404 page
 app.use((req, res) => {
   res.status(404)
   res.render('404')
-}) 
+}) */
 // for testing
-// app.use(handlers.notFound)
+app.use(handlers.notFound)
 
-// custom 500 page
+/* custom 500 page
 app.use((err, req, res, next) => {
   console.error(err.message)
   res.status(500)
   res.render('500')
-})
+}) */
 // for testing
-// app.use(handlers.serverError)
+pp.use(handlers.serverError)
 
 app.listen(port, () => { console.log(
     `Express running on http://localhost:${port}; ` +
